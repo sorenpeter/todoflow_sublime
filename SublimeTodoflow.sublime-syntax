@@ -5,19 +5,23 @@ file_extensions: [taskpaper]
 scope: text.taskpaper
 
 
-
 contexts:
   main:
     # whole line tags
     - match: '^.*@search.*\n'
       scope: tag.search.taskpaper
     - match: '^.*@done.*\n'
-      scope: comment.taskpaper
+      scope: done.taskpaper
     - match: '^.*@waiting.*\n'
       scope: tag.waiting.taskpaper
+    # action/task
+    - match: ^\s*-
+      scope: action.taskpaper
+      pop: true  
     # project
     - match: ^.*:$
       scope: project.taskpaper
+      pop: true
     # highlighted tags
     - match: '@working'
       scope: tag.working.taskpaper
@@ -32,6 +36,9 @@ contexts:
     - match: '@[^\s(]*'
       scope: tag.taskpaper
       push: tag_param
+    # note
+    - match: ^.*
+      scope: note.taskpaper
 
   tag_param:
     - match: \s
